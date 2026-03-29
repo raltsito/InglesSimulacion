@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Karasuno — Examen de Inglés B2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:          #0C0805;
+      --surface:     #181008;
+      --surface-2:   #221508;
+      --surface-3:   #2C1C0A;
+      --orange:      #C8501A;
+      --orange-2:    #E06020;
+      --orange-glow: rgba(200, 80, 26, 0.18);
+      --orange-dim:  rgba(200, 80, 26, 0.07);
+      --cream:       #F2E4D4;
+      --text:        #DFD0BF;
+      --muted:       #7A6050;
+      --border:      rgba(200, 80, 26, 0.18);
+      --border-soft: rgba(255, 220, 180, 0.08);
+      --green:       #4CAF7D;
+      --red:         #E05040;
+      --yellow:      #E8A020;
+    }
+
+    html, body {
+      min-height: 100vh;
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* dot grid */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(200,80,26,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ambient glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 500px;
+      background: radial-gradient(ellipse, rgba(200,80,26,0.10) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(12,8,5,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 62px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-pill {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+    }
+    .logo-pill .icon {
+      width: 32px; height: 32px;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 12px rgba(200,80,26,0.45);
+    }
+    .logo-pill span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 17px;
+      letter-spacing: 2px;
+      color: var(--cream);
+    }
+
+    .divider-v {
+      width: 1px;
+      height: 22px;
+      background: var(--border-soft);
+    }
+
+    .exam-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* timer */
+    .timer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 7px 14px;
+    }
+    .timer svg { color: var(--orange); }
+    .timer-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .timer.warn .timer-val { color: var(--red); }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1px solid var(--border-soft);
+      border-radius: 9px;
+      padding: 7px 14px;
+      color: var(--muted);
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-back:hover { border-color: var(--border); color: var(--text); }
+
+    /* ── MAIN WRAPPER ── */
+    .wrapper {
+      position: relative; z-index: 1;
+      padding: 90px 24px 80px;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── EXAM HEADER ── */
+    .exam-header {
+      padding: 40px 0 36px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      animation: fadeDown .7s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    .exam-header-left h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 58px;
+      letter-spacing: 4px;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .exam-header-left h1 em { color: var(--orange); font-style: normal; }
+    .exam-header-left p {
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    .progress-overview {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .progress-overview span {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .5px;
+    }
+    .prog-steps {
+      display: flex;
+      gap: 6px;
+    }
+    .prog-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--surface-3);
+      border: 2px solid var(--border-soft);
+      transition: background .3s, border-color .3s;
+    }
+    .prog-dot.done    { background: var(--green);  border-color: var(--green); }
+    .prog-dot.current { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 8px rgba(200,80,26,0.5); }
+
+    /* ── QUESTION CARD ── */
+    .question-stage {
+      position: relative;
+      min-height: 420px;
+    }
+
+    .q-card {
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 24px;
+      padding: 44px 48px;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      opacity: 0;
+      transform: translateX(40px);
+      pointer-events: none;
+      transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
+    }
+    .q-card.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: all;
+      position: relative;
+    }
+    .q-card.exit {
+      opacity: 0;
+      transform: translateX(-40px);
+      pointer-events: none;
+    }
+    .q-card.enter {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+
+    /* diagonal accent */
+    .q-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: repeating-linear-gradient(
+        -55deg,
+        transparent 0px, transparent 20px,
+        rgba(200,80,26,0.025) 20px, rgba(200,80,26,0.025) 21px
+      );
+      pointer-events: none;
+    }
+
+    /* top accent bar */
+    .q-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 36px; right: 36px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange), transparent);
+      border-radius: 0 0 4px 4px;
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .q-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      color: var(--orange);
+    }
+
+    .q-level-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .lvl-basico    { background: rgba(76,175,125,0.12);  color: #5DC890; border: 1px solid rgba(76,175,125,0.2); }
+    .lvl-intermedio{ background: rgba(232,160,32,0.12);  color: #D09828; border: 1px solid rgba(232,160,32,0.2); }
+    .lvl-avanzado  { background: rgba(200,80,26,0.12);   color: #E07040; border: 1px solid rgba(200,80,26,0.25); }
+
+    .q-text {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.45;
+      margin-bottom: 36px;
+      position: relative; z-index: 1;
+    }
+    .q-text .blank {
+      display: inline-block;
+      border-bottom: 3px solid var(--orange);
+      padding: 0 18px 2px;
+      color: var(--orange-2);
+      min-width: 80px;
+      text-align: center;
+    }
+
+    /* Options grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      position: relative; z-index: 1;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      border-radius: 14px;
+      border: 2px solid var(--border-soft);
+      background: var(--surface-2);
+      cursor: pointer;
+      transition:
+        border-color .2s,
+        background .2s,
+        transform .15s;
+      user-select: none;
+    }
+    .option:hover {
+      border-color: rgba(200,80,26,0.35);
+      background: var(--surface-3);
+      transform: translateY(-2px);
+    }
+    .option.selected {
+      border-color: var(--orange);
+      background: var(--orange-glow);
+    }
+
+    .opt-letter {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--surface-3);
+      border: 1.5px solid var(--border-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 17px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .option.selected .opt-letter {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+
+    .opt-text {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--text);
+      transition: color .2s;
+    }
+    .option.selected .opt-text { color: var(--cream); font-weight: 600; }
+
+    /* ── NAVIGATION BAR ── */
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 0;
+      animation: fadeUp .5s .4s both;
+    }
+
+    .q-counter {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .q-counter strong { color: var(--text); }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: none;
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s, opacity .2s;
+    }
+    .btn-nav:active { transform: scale(.97); }
+    .btn-nav:disabled { opacity: .35; cursor: not-allowed; }
+
+    .btn-prev {
+      background: var(--surface-2);
+      border: 1px solid var(--border-soft);
+      color: var(--text);
+    }
+    .btn-prev:hover:not(:disabled) { background: var(--surface-3); }
+
+    .btn-next {
+      background: var(--orange);
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(200,80,26,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-next::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,.1), transparent);
+    }
+    .btn-next:hover:not(:disabled) {
+      background: var(--orange-2);
+      box-shadow: 0 8px 28px rgba(200,80,26,0.5);
+    }
+
+    .btn-submit {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(76,175,125,0.35);
+    }
+    .btn-submit:hover:not(:disabled) { background: #5DC890; }
+    .btn-submit:disabled { background: var(--surface-2); color: var(--muted); box-shadow: none; }
+
+    /* ── RESULT OVERLAY ── */
+    .result-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12,8,5,0.92);
+      backdrop-filter: blur(18px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s;
+    }
+    .result-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 52px 60px;
+      max-width: 520px;
+      width: 90%;
+      text-align: center;
+      transform: scale(.9) translateY(20px);
+      transition: transform .5s cubic-bezier(.16,1,.3,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .result-overlay.show .result-card {
+      transform: scale(1) translateY(0);
+    }
+    .result-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -55deg, transparent 0px, transparent 20px,
+        rgba(200,80,26,0.03) 20px, rgba(200,80,26,0.03) 21px
+      );
+      pointer-events: none;
+    }
+
+    .result-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+
+    .result-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 44px;
+      letter-spacing: 3px;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+
+    .result-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* per-question results */
+    .result-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+
+    .result-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-soft);
+    }
+
+    .result-status {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 13px;
+      margin-top: 1px;
+    }
+    .result-status.correct   { background: rgba(76,175,125,0.2);  color: var(--green); }
+    .result-status.incorrect { background: rgba(224,80,64,0.2);   color: var(--red); }
+    .result-status.skipped   { background: rgba(122,96,80,0.2);   color: var(--muted); }
+
+    .result-q-text {
+      font-size: 13px;
+      color: var(--text);
+      flex: 1;
+      line-height: 1.45;
+    }
+    .result-q-text .your-answer {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+    }
+    .result-q-text .correct-ans {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--green);
+    }
+    .result-q-text .wrong-ans {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--red);
+    }
+
+    .score-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 28px;
+      margin-bottom: 28px;
+    }
+    .score-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 64px;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .score-val .frac {
+      font-size: 32px;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+    .score-label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .5px;
+      margin-top: 4px;
+    }
+
+    .btn-retry {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      background: var(--orange);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 21px;
+      letter-spacing: 3px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(200,80,26,0.4);
+      transition: background .2s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-retry::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(to bottom,rgba(255,255,255,.1),transparent);
+    }
+    .btn-retry:hover { background: var(--orange-2); }
+
+    .btn-back-dash {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Sora', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-back-dash:hover { border-color: var(--border); color: var(--text); }
+
+    /* ── Keyframes ── */
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(12px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes popIn {
+      0%   { transform:scale(.5); opacity:0; }
+      70%  { transform:scale(1.15); }
+      100% { transform:scale(1); opacity:1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="dashboard.html" class="logo-pill">
+      <div class="icon">
+        <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
+          <path d="M20 8C14 4 6 6 2 2L6 10C10 12 14 16 12 22C8 18 2 20 0 26C4 22 10 24 10 30C9 24 14 20 16 28L20 22L24 28C26 20 31 24 30 30C30 24 36 22 40 26C38 20 32 18 28 22C26 16 30 12 34 10L38 2C34 6 26 4 20 8Z" fill="white" opacity="0.9"/>
+          <path d="M18 21Q20 36 22 21Q21 28 20 32Q19 28 18 21Z" fill="white" opacity="0.9"/>
+        </svg>
+      </div>
+      <span>KARASUNO</span>
+    </a>
+    <div class="divider-v"></div>
+    <span class="exam-label">Examen de Inglés · B2</span>
+  </div>
+
+  <div class="timer" id="timerBox">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span class="timer-val" id="timerVal">60:00</span>
+  </div>
+
+  <div class="topbar-right">
+    <a href="dashboard.html" class="btn-back">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Dashboard
+    </a>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="wrapper">
+
+  <!-- Exam header -->
+  <div class="exam-header">
+    <div class="exam-header-left">
+      <h1>Examen <em>Inglés</em></h1>
+      <p>Selecciona la opción que mejor complete cada oración.</p>
+    </div>
+    <div class="progress-overview">
+      <span>Progreso</span>
+      <div class="prog-steps">
+        <div class="prog-dot current" id="dot-0"></div>
+        <div class="prog-dot"         id="dot-1"></div>
+        <div class="prog-dot"         id="dot-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question Stage -->
+  <div class="question-stage" id="stage">
+
+    <!-- Q1: Básico -->
+    <div class="q-card active" data-q="0" id="card-0">
+      <div class="q-meta">
+        <span class="q-number">PREGUNTA 01</span>
+        <span class="q-level-badge lvl-basico">Básico</span>
+      </div>
+      <p class="q-text">
+        ___ you like pizza?
+      </p>
+      <div class="options-grid">
+        <div class="option" data-q="0" data-val="A" onclick="selectOption(this)">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Do</span>
+        </div>
+        <div class="option" data-q="0" data-val="B" onclick="selectOption(this)">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Does</span>
+        </div>
+        <div class="option" data-q="0" data-val="C" onclick="selectOption(this)">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Did</span>
+        </div>
+        <div class="option" data-q="0" data-val="D" onclick="selectOption(this)">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Are</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: Intermedio -->
+    <div class="q-card" data-q="1" id="card-1">
+      <div class="q-meta">
+        <span class="q-number">PREGUNTA 02</span>
+        <span class="q-level-badge lvl-intermedio">Intermedio</span>
+      </div>
+      <p class="q-text">
+        If it rains, we ___ at home.
+      </p>
+      <div class="options-grid">
+        <div class="option" data-q="1" data-val="A" onclick="selectOption(this)">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">stay</span>
+        </div>
+        <div class="option" data-q="1" data-val="B" onclick="selectOption(this)">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">will stay</span>
+        </div>
+        <div class="option" data-q="1" data-val="C" onclick="selectOption(this)">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">stayed</span>
+        </div>
+        <div class="option" data-q="1" data-val="D" onclick="selectOption(this)">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">staying</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Avanzado -->
+    <div class="q-card" data-q="2" id="card-2">
+      <div class="q-meta">
+        <span class="q-number">PREGUNTA 03</span>
+        <span class="q-level-badge lvl-avanzado">Avanzado</span>
+      </div>
+      <p class="q-text">
+        By the time we arrived, the movie ___.
+      </p>
+      <div class="options-grid">
+        <div class="option" data-q="2" data-val="A" onclick="selectOption(this)">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">started</span>
+        </div>
+        <div class="option" data-q="2" data-val="B" onclick="selectOption(this)">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">has started</span>
+        </div>
+        <div class="option" data-q="2" data-val="C" onclick="selectOption(this)">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">had started</span>
+        </div>
+        <div class="option" data-q="2" data-val="D" onclick="selectOption(this)">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">starting</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /stage -->
+
+  <!-- Navigation -->
+  <div class="nav-bar">
+    <span class="q-counter">
+      Pregunta <strong id="cur-num">1</strong> de <strong>3</strong>
+    </span>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-prev" id="btnPrev" disabled onclick="navigate(-1)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Anterior
+      </button>
+      <button class="btn-nav btn-next" id="btnNext" onclick="navigate(1)">
+        Siguiente
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <button class="btn-nav btn-submit" id="btnSubmit" disabled onclick="submitExam()" style="display:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Entregar
+      </button>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- RESULT OVERLAY -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-card">
+    <div class="result-icon" id="resultIcon"></div>
+    <div class="result-title" id="resultTitle"></div>
+    <p class="result-sub" id="resultSub"></p>
+
+    <div class="score-box">
+      <div class="score-val" id="scoreVal"></div>
+      <div class="score-label">Respuestas correctas</div>
+    </div>
+
+    <div class="result-list" id="resultList"></div>
+
+    <button class="btn-retry" onclick="retryExam()">Reintentar Examen</button>
+    <a href="dashboard.html" class="btn-back-dash">Volver al Dashboard</a>
+  </div>
+</div>
+
+<script>
+  // ─── Data ───
+  const questions = [
+    {
+      id: 0,
+      text: '___ you like pizza?',
+      correct: 'A',
+      options: { A:'Do', B:'Does', C:'Did', D:'Are' }
+    },
+    {
+      id: 1,
+      text: 'If it rains, we ___ at home.',
+      correct: 'B',
+      options: { A:'stay', B:'will stay', C:'stayed', D:'staying' }
+    },
+    {
+      id: 2,
+      text: 'By the time we arrived, the movie ___.',
+      correct: 'C',
+      options: { A:'started', B:'has started', C:'had started', D:'starting' }
+    }
+  ];
+
+  const answers = [null, null, null];
+  let current = 0;
+  const TOTAL  = 3;
+
+  // ─── Timer ───
+  let seconds = 60 * 60;
+  const timerVal = document.getElementById('timerVal');
+  const timerBox = document.getElementById('timerBox');
+
+  const tick = setInterval(() => {
+    seconds--;
+    if (seconds <= 0) { clearInterval(tick); submitExam(); return; }
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    timerVal.textContent = `${m}:${s}`;
+    if (seconds <= 300) timerBox.classList.add('warn');
+  }, 1000);
+
+  // ─── Select option ───
+  function selectOption(el) {
+    const q = parseInt(el.dataset.q);
+    const v = el.dataset.val;
+    answers[q] = v;
+
+    // deselect siblings
+    document.querySelectorAll(`.option[data-q="${q}"]`).forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    // update submit button
+    updateSubmit();
+  }
+
+  function updateSubmit() {
+    const allAnswered = answers.every(a => a !== null);
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = !allAnswered;
+  }
+
+  // ─── Navigate ───
+  function navigate(dir) {
+    const cards = document.querySelectorAll('.q-card');
+    const dots  = document.querySelectorAll('.prog-dot');
+
+    cards[current].classList.remove('active');
+    cards[current].classList.add('exit');
+    setTimeout(() => cards[current].classList.remove('exit'), 500);
+
+    current += dir;
+    current = Math.max(0, Math.min(TOTAL - 1, current));
+
+    cards[current].classList.remove('enter');
+    cards[current].classList.add('active');
+
+    // dots
+    dots.forEach((d, i) => {
+      d.classList.remove('current', 'done');
+      if (i < current) d.classList.add('done');
+      if (i === current) d.classList.add('current');
+    });
+
+    document.getElementById('cur-num').textContent = current + 1;
+    document.getElementById('btnPrev').disabled = current === 0;
+
+    const isLast = current === TOTAL - 1;
+    document.getElementById('btnNext').style.display   = isLast ? 'none' : '';
+    document.getElementById('btnSubmit').style.display = isLast ? '' : 'none';
+    updateSubmit();
+  }
+
+  // ─── Submit ───
+  function submitExam() {
+    clearInterval(tick);
+
+    let correct = 0;
+    questions.forEach((q, i) => {
+      if (answers[i] === q.correct) correct++;
+    });
+
+    const pct = Math.round((correct / TOTAL) * 100);
+
+    // Score color
+    let scoreColor = '#E85040';
+    if (pct >= 80) scoreColor = '#4CAF7D';
+    else if (pct >= 50) scoreColor = '#E8A020';
+
+    // Icon & title
+    const icons    = ['😞','😐','🎉'];
+    const titles   = ['Sigue Practicando','¡Buen Intento!','¡Excelente!'];
+    const subs     = [
+      'Revisa el material y vuelve a intentarlo. ¡El equipo Karasuno nunca se rinde!',
+      'Vas por buen camino. Un poco más de práctica y lo dominarás.',
+      '¡Lo lograste! Dominas el contenido de este bloque.'
+    ];
+    const tier = pct >= 80 ? 2 : pct >= 50 ? 1 : 0;
+
+    document.getElementById('resultIcon').textContent = icons[tier];
+    document.getElementById('resultIcon').style.cssText = `
+      width:72px;height:72px;border-radius:50%;margin:0 auto 24px;
+      display:flex;align-items:center;justify-content:center;font-size:32px;
+      background:${tier===2?'rgba(76,175,125,0.15)':tier===1?'rgba(232,160,32,0.12)':'rgba(224,80,64,0.12)'};
+      border:2px solid ${tier===2?'rgba(76,175,125,0.3)':tier===1?'rgba(232,160,32,0.3)':'rgba(224,80,64,0.25)'};
+      animation:popIn .5s .1s cubic-bezier(.34,1.56,.64,1) both;
+    `;
+
+    document.getElementById('resultTitle').textContent = titles[tier];
+    document.getElementById('resultSub').textContent   = subs[tier];
+
+    document.getElementById('scoreVal').innerHTML = `
+      <span style="color:${scoreColor}">${correct}</span><span class="frac">/${TOTAL}</span>
+    `;
+
+    // Per-question rows
+    const list = document.getElementById('resultList');
+    list.innerHTML = '';
+    questions.forEach((q, i) => {
+      const userAns   = answers[i];
+      const isCorrect = userAns === q.correct;
+      const skipped   = userAns === null;
+
+      const statusClass = skipped ? 'skipped' : isCorrect ? 'correct' : 'incorrect';
+      const statusIcon  = skipped ? '—' : isCorrect ? '✓' : '✗';
+
+      const yourText = skipped
+        ? '<span class="your-answer" style="color:var(--muted)">Sin respuesta</span>'
+        : isCorrect
+          ? `<span class="correct-ans">✓ Tu respuesta: ${q.options[userAns]}</span>`
+          : `<span class="wrong-ans">✗ Tu respuesta: ${q.options[userAns]}</span>
+             <span class="correct-ans">✓ Correcta: ${q.options[q.correct]}</span>`;
+
+      list.innerHTML += `
+        <div class="result-row">
+          <div class="result-status ${statusClass}">${statusIcon}</div>
+          <div class="result-q-text">
+            ${q.text}
+            ${yourText}
+          </div>
+        </div>
+      `;
+    });
+
+    // Show overlay
+    document.getElementById('resultOverlay').classList.add('show');
+  }
+
+  // ─── Retry ───
+  function retryExam() {
+    answers.fill(null);
+    current = 0;
+
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.q-card').forEach((c, i) => {
+      c.classList.remove('active', 'exit', 'enter');
+      if (i === 0) c.classList.add('active');
+    });
+    document.querySelectorAll('.prog-dot').forEach((d, i) => {
+      d.classList.remove('done', 'current');
+      if (i === 0) d.classList.add('current');
+    });
+
+    document.getElementById('cur-num').textContent = '1';
+    document.getElementById('btnPrev').disabled = true;
+    document.getElementById('btnNext').style.display   = '';
+    document.getElementById('btnSubmit').style.display = 'none';
+    document.getElementById('btnSubmit').disabled = true;
+    document.getElementById('resultOverlay').classList.remove('show');
+
+    // reset timer
+    seconds = 60 * 60;
+    timerVal.textContent = '60:00';
+    timerBox.classList.remove('warn');
+    clearInterval(tick);
+    setInterval(tick, 1000);
+  }
+</script>
+
+</body>
+</html>
