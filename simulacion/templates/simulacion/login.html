@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -374,7 +375,7 @@
     -->
     <img
       class="char-img"
-      src="hinata.png"
+      src="{% static 'images/hinata.png' %}"
       alt="Hinata Shoyo"
       onerror="this.style.display='none'"
     />
@@ -394,46 +395,55 @@
 
     <h1 class="login-title">Login</h1>
 
-    <!-- Email -->
-    <div class="field">
-      <span class="field-icon">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <rect x="2" y="4" width="20" height="16" rx="2"/>
-          <polyline points="2,4 12,13 22,4"/>
-        </svg>
-      </span>
-      <input type="email" placeholder="Email" autocomplete="email"/>
-    </div>
+    <form method="post" id="loginForm">
+      {% csrf_token %}
 
-    <!-- Password -->
-    <div class="field">
-      <span class="field-icon">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <rect x="3" y="11" width="18" height="11" rx="2"/>
-          <path d="M7 11V7a5 5 0 0110 0v4"/>
-        </svg>
-      </span>
-      <input type="password" id="pwd" placeholder="Password" autocomplete="current-password"/>
-      <button class="btn-eye" onclick="togglePwd()" aria-label="Show/hide password">
-        <svg id="eye-icon" width="17" height="17" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94
-                   M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19
-                   m-6.72-1.07a3 3 0 11-4.24-4.24"/>
-          <line x1="1" y1="1" x2="23" y2="23"/>
-        </svg>
-      </button>
-    </div>
+      {% if error %}
+      <p style="color:#ff6b6b;font-size:.85rem;margin-bottom:.75rem;text-align:center;">{{ error }}</p>
+      {% endif %}
 
-    <!-- Forgot -->
-    <div class="forgot-row">
-      <a href="#">Forgot Password?</a>
-    </div>
+      <!-- Usuario -->
+      <div class="field">
+        <span class="field-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <polyline points="2,4 12,13 22,4"/>
+          </svg>
+        </span>
+        <input type="text" name="username" placeholder="Usuario" autocomplete="username"/>
+      </div>
 
-    <!-- Log In -->
-    <button class="btn-login" id="loginBtn">Log In</button>
+      <!-- Password -->
+      <div class="field">
+        <span class="field-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+        </span>
+        <input type="password" id="pwd" name="password" placeholder="Password" autocomplete="current-password"/>
+        <button type="button" class="btn-eye" onclick="togglePwd()" aria-label="Show/hide password">
+          <svg id="eye-icon" width="17" height="17" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94
+                     M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19
+                     m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Forgot -->
+      <div class="forgot-row">
+        <a href="#">Forgot Password?</a>
+      </div>
+
+      <!-- Log In -->
+      <button type="submit" class="btn-login" id="loginBtn">Log In</button>
+
+    </form>
 
     <!-- Divider -->
     <div class="divider">
@@ -508,7 +518,6 @@
     `;
     btn.appendChild(r);
     r.addEventListener('animationend', () => r.remove());
-    setTimeout(() => { window.location.href = 'dashboard.html'; }, 320);
   });
 </script>
 

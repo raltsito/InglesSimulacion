@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(pip --version)",
+      "Bash(pip show:*)",
+      "Bash(django-admin startproject:*)",
+      "Bash(python manage.py startapp simulacion)",
+      "Bash(python manage.py check)",
+      "Bash(python manage.py migrate)",
+      "Bash(python manage.py shell)"
+    ]
+  }
+}
