@@ -614,6 +614,125 @@
     }
     .btn-exam:active { transform: scale(.97); }
 
+    /* ════════════════════════════
+       SIMULATOR CARD
+    ════════════════════════════ */
+    .sim-card {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(115deg, #041A0D 0%, #082810 40%, #0C3418 100%);
+      border: 1px solid rgba(76,175,125,0.3);
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      cursor: pointer;
+      text-decoration: none;
+      animation: fadeUp .6s .08s cubic-bezier(.16,1,.3,1) both;
+      transition: border-color .3s, transform .2s;
+    }
+    .sim-card:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+    .sim-card::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -40px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(76,175,125,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .sim-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -55deg, transparent 0px, transparent 14px,
+        rgba(76,175,125,0.04) 14px, rgba(76,175,125,0.04) 15px
+      );
+      pointer-events: none;
+    }
+    .sim-left { position: relative; z-index: 1; }
+    .sim-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(76,175,125,0.15);
+      border: 1px solid rgba(76,175,125,0.35);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .sim-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    .sim-left h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px;
+      letter-spacing: 3px;
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+    .sim-left h2 em { color: var(--green); font-style: normal; }
+    .sim-left p {
+      font-size: 13px;
+      color: rgba(242,228,212,0.55);
+      max-width: 380px;
+      line-height: 1.55;
+    }
+    .sim-right {
+      position: relative; z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .sim-stats { display: flex; gap: 12px; }
+    .sim-stat {
+      text-align: center;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(76,175,125,0.15);
+      border-radius: 12px;
+      padding: 10px 16px;
+    }
+    .sim-stat .v {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      color: var(--green);
+      line-height: 1;
+    }
+    .sim-stat .l { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: .5px; }
+    .btn-sim {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 2.5px;
+      padding: 11px 22px;
+      white-space: nowrap;
+      transition: background .22s, transform .12s, box-shadow .22s;
+      box-shadow: 0 6px 24px rgba(76,175,125,0.38);
+    }
+    .btn-sim:hover { background: #3d9e6a; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(76,175,125,0.48); }
+
     /* ════════════════════
        COURSES GRID
     ════════════════════ */
@@ -913,6 +1032,53 @@
     .course-card:nth-child(2) { animation-delay: .27s; }
     .course-card:nth-child(3) { animation-delay: .34s; }
     .course-card:nth-child(4) { animation-delay: .41s; }
+
+    /* ── FIXES DE LAYOUT ── */
+    .main { min-width: 0; }
+
+    /* ── RESPONSIVE ── */
+
+    /* 1280 px — schedule panel se vuelve más angosto */
+    @media (max-width: 1280px) {
+      .bottom-grid { grid-template-columns: 1fr 290px; }
+      .exam-hero   { padding: 28px 32px; }
+      .exam-left h2 { font-size: 40px; }
+    }
+
+    /* 1100 px — bottom grid apilado */
+    @media (max-width: 1100px) {
+      .bottom-grid { grid-template-columns: 1fr; }
+      .schedule-panel { max-height: none; }
+
+      .welcome-banner { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .welcome-stats  { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 12px; }
+      .wstat          { flex: 1; min-width: 100px; }
+
+      .sim-card  { flex-direction: column; align-items: flex-start; }
+      .sim-right { align-items: flex-start; width: 100%; }
+      .sim-stats { flex-wrap: wrap; }
+
+      .exam-hero  { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .exam-right { align-items: flex-start; width: 100%; }
+      .exam-stats { flex-wrap: wrap; }
+    }
+
+    /* 900 px — sidebar colapsada (contenido sin sidebar) */
+    @media (max-width: 900px) {
+      body         { grid-template-columns: 1fr; }
+      .sidebar     { display: none; }
+      .topbar      { padding: 12px 20px; }
+      .content     { padding: 20px 20px 48px; }
+    }
+
+    /* 600 px — grids de cursos de 1 columna */
+    @media (max-width: 600px) {
+      .courses-grid  { grid-template-columns: 1fr; }
+      .exam-stats    { gap: 10px; }
+      .sim-stats     { gap: 8px; }
+      .welcome-left h1 { font-size: 36px; }
+      .grades-table th, .grades-table td { padding: 8px 6px; font-size: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -963,7 +1129,11 @@
     </a>
 
     <span class="nav-section-label">Evaluaciones</span>
-    <a href="{% url 'examen' %}" class="nav-item">
+    <a href="{% url 'simulador_practica' %}" class="nav-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Simulador Práctica
+    </a>
+    <a href="{% url 'simulador_final' %}" class="nav-item">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
       Examen de Inglés
     </a>
@@ -1036,8 +1206,37 @@
       </div>
     </div>
 
+    <!-- ═══════════ SIMULADOR DE PRÁCTICA ═══════════ -->
+    <a href="{% url 'simulador_practica' %}" class="sim-card">
+      <div class="sim-left">
+        <div class="sim-badge">Disponible</div>
+        <h2>Simulador de<br/><em>Práctica</em></h2>
+        <p>Practica con 20 preguntas aleatorias antes del examen final. Tienes hasta 5 intentos y 60 segundos por pregunta.</p>
+      </div>
+      <div class="sim-right">
+        <div class="sim-stats">
+          <div class="sim-stat">
+            <div class="v">20</div>
+            <div class="l">Preguntas</div>
+          </div>
+          <div class="sim-stat">
+            <div class="v">60</div>
+            <div class="l">Seg / Preg</div>
+          </div>
+          <div class="sim-stat">
+            <div class="v">5</div>
+            <div class="l">Intentos</div>
+          </div>
+        </div>
+        <div class="btn-sim">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Iniciar práctica
+        </div>
+      </div>
+    </a>
+
     <!-- ═══════════ ENGLISH EXAM HERO ═══════════ -->
-    <a href="{% url 'examen' %}" class="exam-hero" style="text-decoration:none;">
+    <a href="{% url 'simulador_final' %}" class="exam-hero" style="text-decoration:none;">
       <div class="exam-left">
         <div class="exam-badge">Disponible ahora</div>
         <h2>Examen Final de<br/><em>Inglés B2</em></h2>

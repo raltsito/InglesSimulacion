@@ -122,7 +122,7 @@ BEGIN
 
     IF @estado <> 'EnCurso'
     BEGIN
-        RAISERROR('Solo se pueden cancelar exámenes en curso.', 16, 1);
+        RAISERROR('Solo se pueden cancelar exï¿½menes en curso.', 16, 1);
         RETURN;
     END
 
@@ -236,7 +236,7 @@ BEGIN
 
     IF @intentos_actuales >= 2
     BEGIN
-        RAISERROR('El usuario ya alcanzó el máximo de 2 intentos finales', 16, 1);
+        RAISERROR('El usuario ya alcanzï¿½ el mï¿½ximo de 2 intentos finales', 16, 1);
         RETURN;
     END
 
@@ -345,7 +345,7 @@ AS
 				AND estado = 'EnCurso'
 		)
 		BEGIN
-			RAISERROR('El usuario ya tiene un examen de práctica en curso', 16, 1);
+			RAISERROR('El usuario ya tiene un examen de prï¿½ctica en curso', 16, 1);
 			RETURN;
 		END
 
@@ -356,13 +356,13 @@ AS
 
 		IF @intentos_actuales >= 5
 		BEGIN
-			RAISERROR('El usuario ya alcanzó el máximo de 5 intentos de práctica', 16, 1);
+			RAISERROR('El usuario ya alcanzï¿½ el mï¿½ximo de 5 intentos de prï¿½ctica', 16, 1);
 			RETURN;
 		END
 
 		IF (SELECT COUNT(*) FROM preguntas WHERE activa = 1) < 20
 		BEGIN
-			RAISERROR('No hay suficientes preguntas activas para generar el examen de práctica', 16, 1);
+			RAISERROR('No hay suficientes preguntas activas para generar el examen de prï¿½ctica', 16, 1);
 			RETURN;
 		END
 
@@ -447,7 +447,7 @@ BEGIN
 	DECLARE @ya_respondida BIT;
 
 	SELECT @ya_respondida = respondida
-	FROM examen_perguntas
+	FROM examen_preguntas
 	WHERE id_exam_pregunta = @id_exam_pregunta;
 
 	IF @ya_respondida IS NULL
@@ -462,7 +462,7 @@ BEGIN
 		RETURN;
 	END
 
-	INSERT INTO repsuesta_usuario (
+	INSERT INTO respuesta_usuario (
 		id_exam_pregunta,
 		respuesta_selec,
 		es_correcta,
