@@ -3,6 +3,7 @@ import functools
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db import connection
+from django.db.models import Avg, Max
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Usuarios, Examenes, ExamenPreguntas
 
@@ -96,7 +97,78 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
-    return render(request, 'simulacion/dashboard.html')
+    id_usuario = request.session['id_usuario']
+
+    # ── Práctica ──────────────────────────────────────────────────────────────
+    # Todos los intentos (igual que la validación del SP)
+    total_practica = Examenes.objects.filter(
+        id_usuario=id_usuario, tipo='Practica'
+    ).count()
+
+    qs_prac = Examenes.objects.filter(
+        id_usuario=id_usuario, tipo='Practica', estado='Finalizado'
+    ).order_by('-fecha_inicio')
+
+    avg_practica = mejor_practica = None
+    if qs_prac.exists():
+        agg = qs_prac.aggregate(avg=Avg('porcentaje'), mejor=Max('porcentaje'))
+        avg_practica   = round(float(agg['avg']   or 0), 1)
+        mejor_practica = round(float(agg['mejor'] or 0), 1)
+
+    historial_practica = list(
+        qs_prac.values('fecha_inicio', 'porcentaje', 'aciertos', 'total_preguntas', 'aprobado')[:5]
+    )
+
+    # ── Final ─────────────────────────────────────────────────────────────────
+    total_final = Examenes.objects.filter(
+        id_usuario=id_usuario, tipo='Final'
+    ).count()
+
+    qs_fin = Examenes.objects.filter(
+        id_usuario=id_usuario, tipo='Final', estado='Finalizado'
+    ).order_by('-fecha_inicio')
+
+    avg_final = mejor_final = aprobado_final = nivel_final = None
+    if qs_fin.exists():
+        agg = qs_fin.aggregate(avg=Avg('porcentaje'), mejor=Max('porcentaje'))
+        avg_final   = round(float(agg['avg']   or 0), 1)
+        mejor_final = round(float(agg['mejor'] or 0), 1)
+        ultimo = qs_fin.first()
+        aprobado_final = ultimo.aprobado
+        nivel_final    = ultimo.nivel_obtenido
+
+    historial_final = list(
+        qs_fin.values('fecha_inicio', 'porcentaje', 'aciertos', 'total_preguntas', 'aprobado', 'nivel_obtenido')[:2]
+    )
+
+    # ── Beneficio ─────────────────────────────────────────────────────────────
+    beneficio = None
+    if avg_practica is not None and avg_final is not None:
+        beneficio = round(avg_final - avg_practica, 1)
+
+    return render(request, 'simulacion/dashboard.html', {
+        'nombre':              request.session.get('nombre', ''),
+        'paterno':             request.session.get('paterno', ''),
+        'matricula':           request.session.get('matricula', ''),
+        # Práctica
+        'total_practica':      total_practica,
+        'practica_rest':       max(0, 5 - total_practica),
+        'avg_practica':        avg_practica,
+        'mejor_practica':      mejor_practica,
+        'historial_practica':  historial_practica,
+        # Final
+        'total_final':         total_final,
+        'final_rest':          max(0, 2 - total_final),
+        'avg_final':           avg_final,
+        'mejor_final':         mejor_final,
+        'aprobado_final':      aprobado_final,
+        'nivel_final':         nivel_final,
+        'historial_final':     historial_final,
+        # Beneficio
+        'beneficio':           beneficio,
+        'has_practica_data':   avg_practica is not None,
+        'has_comparison':      avg_practica is not None and avg_final is not None,
+    })
 
 
 @login_required

@@ -18,16 +18,18 @@
       --surface-3:   #2C1C0A;
       --orange:      #C8501A;
       --orange-2:    #E06020;
-      --orange-glow: rgba(200, 80, 26, 0.18);
-      --orange-dim:  rgba(200, 80, 26, 0.08);
+      --orange-glow: rgba(200,80,26,.18);
+      --orange-dim:  rgba(200,80,26,.08);
       --cream:       #F2E4D4;
       --text:        #DFD0BF;
       --muted:       #7A6050;
-      --border:      rgba(200, 80, 26, 0.14);
-      --border-soft: rgba(255, 220, 180, 0.07);
+      --border:      rgba(200,80,26,.14);
+      --border-soft: rgba(255,220,180,.07);
       --sidebar-w:   260px;
       --green:       #4CAF7D;
-      --blue:        #4A90D9;
+      --green-dim:   rgba(76,175,125,.12);
+      --red:         #E85040;
+      --red-dim:     rgba(232,80,64,.12);
       --yellow:      #E8A020;
     }
 
@@ -38,24 +40,19 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: var(--sidebar-w) 1fr;
       overflow-x: hidden;
     }
 
-    /* ─── dot grid overlay ─── */
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background-image: radial-gradient(circle, rgba(200,80,26,0.06) 1px, transparent 1px);
+      background-image: radial-gradient(circle, rgba(200,80,26,.05) 1px, transparent 1px);
       background-size: 32px 32px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ════════════════════════
-       SIDEBAR
-    ════════════════════════ */
+    /* ════════════ SIDEBAR ════════════ */
     .sidebar {
       position: fixed;
       top: 0; left: 0;
@@ -74,11 +71,10 @@
       position: absolute;
       bottom: -80px; left: -60px;
       width: 260px; height: 260px;
-      background: radial-gradient(circle, rgba(200,80,26,0.12) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(200,80,26,.1) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    /* Logo */
     .sidebar-logo {
       padding: 28px 24px 20px;
       border-bottom: 1px solid var(--border);
@@ -93,33 +89,23 @@
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 4px 16px rgba(200,80,26,0.4);
+      box-shadow: 0 4px 16px rgba(200,80,26,.4);
     }
 
-    .logo-text {
-      display: flex; flex-direction: column;
-    }
+    .logo-text { display: flex; flex-direction: column; }
     .logo-text span:first-child {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 2px;
-      color: var(--cream);
-      line-height: 1;
+      font-size: 20px; letter-spacing: 2px;
+      color: var(--cream); line-height: 1;
     }
     .logo-text span:last-child {
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 2px;
+      font-size: 10px; color: var(--muted);
+      letter-spacing: 1px; text-transform: uppercase; margin-top: 2px;
     }
 
-    /* User card */
     .sidebar-user {
       padding: 20px 20px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      display: flex; align-items: center; gap: 12px;
       border-bottom: 1px solid var(--border-soft);
     }
 
@@ -129,896 +115,429 @@
       background: linear-gradient(135deg, var(--orange) 0%, #E8803A 100%);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      color: #fff;
-      flex-shrink: 0;
-      box-shadow: 0 0 0 3px rgba(200,80,26,0.25);
+      font-size: 18px; color: #fff; flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(200,80,26,.25);
     }
 
     .user-info span:first-child {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--cream);
+      display: block; font-size: 13px; font-weight: 600; color: var(--cream);
     }
-    .user-info span:last-child {
-      font-size: 11px;
-      color: var(--muted);
-    }
+    .user-info span:last-child { font-size: 11px; color: var(--muted); }
 
-    /* Nav */
     .sidebar-nav {
       flex: 1;
       padding: 16px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      display: flex; flex-direction: column; gap: 2px;
       overflow-y: auto;
     }
 
     .nav-section-label {
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 10px 10px 6px;
-      margin-top: 6px;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); padding: 10px 10px 6px; margin-top: 6px;
     }
 
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 13.5px;
-      font-weight: 500;
-      transition: background .2s, color .2s;
-      position: relative;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 10px;
+      cursor: pointer; text-decoration: none;
+      color: var(--muted); font-size: 13.5px; font-weight: 500;
+      transition: background .2s, color .2s; position: relative;
     }
-    .nav-item:hover {
-      background: var(--orange-dim);
-      color: var(--text);
-    }
-    .nav-item.active {
-      background: var(--orange-glow);
-      color: var(--cream);
-    }
+    .nav-item:hover { background: var(--orange-dim); color: var(--text); }
+    .nav-item.active { background: var(--orange-glow); color: var(--cream); }
     .nav-item.active::before {
       content: '';
-      position: absolute;
-      left: 0; top: 50%;
+      position: absolute; left: 0; top: 50%;
       transform: translateY(-50%);
       width: 3px; height: 60%;
-      background: var(--orange);
-      border-radius: 0 3px 3px 0;
+      background: var(--orange); border-radius: 0 3px 3px 0;
     }
     .nav-item .badge {
-      margin-left: auto;
-      background: var(--orange);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 1px 7px;
-      border-radius: 20px;
+      margin-left: auto; background: var(--orange); color: #fff;
+      font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 20px;
     }
 
-    /* Sidebar bottom */
     .sidebar-footer {
       padding: 16px 12px;
       border-top: 1px solid var(--border-soft);
     }
     .btn-logout {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-family: 'Sora', sans-serif;
-      font-size: 13px;
-      cursor: pointer;
-      text-align: left;
-      transition: background .2s, color .2s;
-      text-decoration: none;
+      width: 100%; display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 10px; border: none;
+      background: transparent; color: var(--muted);
+      font-family: 'Sora', sans-serif; font-size: 13px;
+      cursor: pointer; text-align: left;
+      transition: background .2s, color .2s; text-decoration: none;
     }
-    .btn-logout:hover {
-      background: rgba(255,80,80,0.08);
-      color: #FF6B6B;
-    }
+    .btn-logout:hover { background: rgba(255,80,80,.08); color: #FF6B6B; }
 
-    /* ════════════════════════
-       MAIN CONTENT
-    ════════════════════════ */
+    /* ════════════ MAIN ════════════ */
     .main {
-      margin-left: 0;
+      margin-left: var(--sidebar-w);
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      position: relative;
-      z-index: 1;
+      display: flex; flex-direction: column;
+      min-height: 100vh; position: relative; z-index: 1;
     }
 
-    /* Top bar */
     .topbar {
-      position: sticky;
-      top: 0;
-      background: rgba(12,8,5,0.85);
+      position: sticky; top: 0;
+      background: rgba(12,8,5,.88);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-soft);
       padding: 14px 36px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      display: flex; align-items: center; gap: 16px;
       z-index: 50;
     }
 
     .topbar-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      letter-spacing: 2px;
-      color: var(--cream);
-      opacity: 0.6;
+      font-size: 18px; letter-spacing: 2px;
+      color: var(--cream); opacity: .6;
     }
 
-    .topbar-search {
-      flex: 1;
-      max-width: 340px;
-      position: relative;
-    }
-    .topbar-search input {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border-soft);
-      border-radius: 8px;
-      padding: 8px 14px 8px 36px;
-      color: var(--text);
-      font-family: 'Sora', sans-serif;
-      font-size: 13px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .topbar-search input:focus {
-      border-color: rgba(200,80,26,0.4);
-    }
-    .topbar-search input::placeholder { color: var(--muted); }
-    .topbar-search svg {
-      position: absolute;
-      left: 11px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-    }
-
-    .topbar-actions {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 
     .icon-btn {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--border-soft);
-      background: var(--surface-2);
-      color: var(--muted);
-      cursor: pointer;
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1px solid var(--border-soft); background: var(--surface-2);
+      color: var(--muted); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: border-color .2s, color .2s;
-      position: relative;
     }
     .icon-btn:hover { border-color: var(--orange); color: var(--orange); }
-    .icon-btn .dot {
-      position: absolute;
-      top: 7px; right: 7px;
-      width: 7px; height: 7px;
-      background: var(--orange);
-      border-radius: 50%;
-      border: 2px solid var(--bg);
-    }
 
-    /* ─── CONTENT BODY ─── */
+    /* ── CONTENT ── */
     .content {
       padding: 36px 36px 60px;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
+      display: flex; flex-direction: column; gap: 24px;
     }
 
-    /* ── WELCOME BANNER ── */
+    /* ── WELCOME ── */
     .welcome-banner {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 32px 36px;
-      display: flex;
-      align-items: center;
+      padding: 28px 36px;
+      display: flex; align-items: center;
       justify-content: space-between;
-      overflow: hidden;
-      position: relative;
-      animation: fadeUp .6s .1s cubic-bezier(.16,1,.3,1) both;
+      position: relative; overflow: hidden;
+      animation: fadeUp .5s .05s cubic-bezier(.16,1,.3,1) both;
     }
-
     .welcome-banner::before {
       content: '';
-      position: absolute;
-      top: -40px; right: -20px;
-      width: 300px; height: 200px;
-      background: radial-gradient(ellipse, rgba(200,80,26,0.14) 0%, transparent 70%);
+      position: absolute; top: -40px; right: -20px;
+      width: 280px; height: 200px;
+      background: radial-gradient(ellipse, rgba(200,80,26,.13) 0%, transparent 70%);
       pointer-events: none;
     }
-
-    /* diagonal stripe */
     .welcome-banner::after {
       content: '';
-      position: absolute;
-      top: 0; right: 0;
-      width: 100%; height: 100%;
+      position: absolute; inset: 0;
       background: repeating-linear-gradient(
-        -55deg,
-        transparent 0px,
-        transparent 22px,
-        rgba(200,80,26,0.03) 22px,
-        rgba(200,80,26,0.03) 23px
+        -55deg, transparent 0, transparent 22px,
+        rgba(200,80,26,.025) 22px, rgba(200,80,26,.025) 23px
       );
       pointer-events: none;
     }
 
+    .welcome-left { position: relative; z-index: 1; }
     .welcome-left h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 48px;
-      letter-spacing: 3px;
-      color: var(--cream);
-      line-height: 1;
-      margin-bottom: 8px;
+      font-size: 44px; letter-spacing: 3px;
+      color: var(--cream); line-height: 1; margin-bottom: 6px;
     }
     .welcome-left h1 span { color: var(--orange); }
+    .welcome-left p { font-size: 12.5px; color: var(--muted); }
 
-    .welcome-left p {
-      font-size: 13.5px;
-      color: var(--muted);
-      max-width: 380px;
+    .welcome-chips {
+      display: flex; gap: 14px; position: relative; z-index: 1;
     }
 
-    .welcome-stats {
-      display: flex;
-      gap: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .wstat {
+    .chip {
       text-align: center;
       background: var(--surface-2);
       border: 1px solid var(--border-soft);
       border-radius: 14px;
-      padding: 16px 22px;
+      padding: 14px 20px;
+      min-width: 90px;
     }
-    .wstat .val {
+    .chip .val {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 36px;
-      letter-spacing: 1px;
-      color: var(--orange);
-      line-height: 1;
+      font-size: 32px; letter-spacing: 1px;
+      color: var(--orange); line-height: 1;
     }
-    .wstat .lbl {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: .5px;
-      margin-top: 4px;
+    .chip .lbl {
+      font-size: 10px; color: var(--muted);
+      letter-spacing: .4px; margin-top: 4px; line-height: 1.3;
     }
+    .chip.chip-green { border-color: rgba(76,175,125,.25); }
+    .chip.chip-green .val { color: var(--green); }
+    .chip.chip-red { border-color: rgba(232,80,64,.25); }
+    .chip.chip-red .val { color: var(--red); }
 
     /* ── SECTION TITLE ── */
     .section-head {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
-      margin-bottom: -8px;
     }
     .section-head h2 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 2px;
-      color: var(--cream);
+      font-size: 20px; letter-spacing: 2px; color: var(--cream);
     }
     .section-head h2 span {
       display: inline-block;
       width: 6px; height: 6px;
-      background: var(--orange);
-      border-radius: 50%;
-      margin-left: 8px;
-      vertical-align: middle;
-      position: relative; top: -2px;
-    }
-    .see-all {
-      font-size: 12px;
-      color: var(--orange);
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: .5px;
-      transition: opacity .2s;
-    }
-    .see-all:hover { opacity: .7; }
-
-    /* ═══════════════════════════
-       ENGLISH EXAM HERO CARD
-    ═══════════════════════════ */
-    .exam-hero {
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-      background: linear-gradient(115deg, #1A0800 0%, #2C1200 40%, #3D1A00 100%);
-      border: 1px solid rgba(200,80,26,0.35);
-      padding: 36px 44px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      animation: fadeUp .6s .15s cubic-bezier(.16,1,.3,1) both;
-      transition: border-color .3s, transform .2s;
-    }
-    .exam-hero:hover {
-      border-color: var(--orange);
-      transform: translateY(-2px);
+      background: var(--orange); border-radius: 50%;
+      margin-left: 8px; vertical-align: middle; position: relative; top: -2px;
     }
 
-    /* animated glow */
-    .exam-hero::before {
-      content: '';
-      position: absolute;
-      top: -60px; left: -60px;
-      width: 350px; height: 350px;
-      background: radial-gradient(circle, rgba(200,80,26,0.22) 0%, transparent 60%);
-      animation: pulse 3s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    /* diagonal lines pattern */
-    .exam-hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -55deg,
-        transparent 0px,
-        transparent 14px,
-        rgba(200,80,26,0.05) 14px,
-        rgba(200,80,26,0.05) 15px
-      );
-      pointer-events: none;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: .7; transform: scale(1); }
-      50%       { opacity: 1; transform: scale(1.1); }
-    }
-
-    .exam-left {
-      position: relative; z-index: 1;
-    }
-
-    .exam-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(200,80,26,0.2);
-      border: 1px solid rgba(200,80,26,0.4);
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--orange-2);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-    .exam-badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--orange);
-      border-radius: 50%;
-      animation: blink 1.2s ease-in-out infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: .3; }
-    }
-
-    .exam-left h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 52px;
-      letter-spacing: 4px;
-      color: var(--cream);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-    .exam-left h2 em {
-      color: var(--orange);
-      font-style: normal;
-    }
-    .exam-left p {
-      font-size: 14px;
-      color: rgba(242,228,212,0.6);
-      max-width: 420px;
-      line-height: 1.6;
-    }
-
-    .exam-right {
-      position: relative; z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 16px;
-    }
-
-    .exam-stats {
-      display: flex;
-      gap: 16px;
-    }
-    .exam-stat {
-      text-align: center;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid var(--border-soft);
-      border-radius: 12px;
-      padding: 12px 18px;
-    }
-    .exam-stat .v {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      color: var(--orange);
-      line-height: 1;
-    }
-    .exam-stat .l {
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 3px;
-      letter-spacing: .5px;
-    }
-
-    .btn-exam {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--orange);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      padding: 14px 32px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 3px;
-      cursor: pointer;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-      transition: background .25s, transform .15s;
-      box-shadow: 0 8px 32px rgba(200,80,26,0.45);
-    }
-    .btn-exam::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,.12), transparent);
-      pointer-events: none;
-    }
-    .btn-exam:hover {
-      background: var(--orange-2);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(200,80,26,0.55);
-    }
-    .btn-exam:active { transform: scale(.97); }
-
-    /* ════════════════════════════
-       SIMULATOR CARD
-    ════════════════════════════ */
-    .sim-card {
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-      background: linear-gradient(115deg, #041A0D 0%, #082810 40%, #0C3418 100%);
-      border: 1px solid rgba(76,175,125,0.3);
-      padding: 28px 36px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      cursor: pointer;
-      text-decoration: none;
-      animation: fadeUp .6s .08s cubic-bezier(.16,1,.3,1) both;
-      transition: border-color .3s, transform .2s;
-    }
-    .sim-card:hover {
-      border-color: var(--green);
-      transform: translateY(-2px);
-    }
-    .sim-card::before {
-      content: '';
-      position: absolute;
-      top: -50px; right: -40px;
-      width: 280px; height: 280px;
-      background: radial-gradient(circle, rgba(76,175,125,0.18) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .sim-card::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        -55deg, transparent 0px, transparent 14px,
-        rgba(76,175,125,0.04) 14px, rgba(76,175,125,0.04) 15px
-      );
-      pointer-events: none;
-    }
-    .sim-left { position: relative; z-index: 1; }
-    .sim-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(76,175,125,0.15);
-      border: 1px solid rgba(76,175,125,0.35);
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--green);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .sim-badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: blink 1.2s ease-in-out infinite;
-    }
-    .sim-left h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 38px;
-      letter-spacing: 3px;
-      color: var(--cream);
-      line-height: 1.05;
-      margin-bottom: 6px;
-    }
-    .sim-left h2 em { color: var(--green); font-style: normal; }
-    .sim-left p {
-      font-size: 13px;
-      color: rgba(242,228,212,0.55);
-      max-width: 380px;
-      line-height: 1.55;
-    }
-    .sim-right {
-      position: relative; z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 14px;
-      flex-shrink: 0;
-    }
-    .sim-stats { display: flex; gap: 12px; }
-    .sim-stat {
-      text-align: center;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(76,175,125,0.15);
-      border-radius: 12px;
-      padding: 10px 16px;
-    }
-    .sim-stat .v {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 26px;
-      color: var(--green);
-      line-height: 1;
-    }
-    .sim-stat .l { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: .5px; }
-    .btn-sim {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--green);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      letter-spacing: 2.5px;
-      padding: 11px 22px;
-      white-space: nowrap;
-      transition: background .22s, transform .12s, box-shadow .22s;
-      box-shadow: 0 6px 24px rgba(76,175,125,0.38);
-    }
-    .btn-sim:hover { background: #3d9e6a; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(76,175,125,0.48); }
-
-    /* ════════════════════
-       COURSES GRID
-    ════════════════════ */
-    .courses-grid {
+    /* ════════════════════════
+       SIMULATORS GRID
+    ════════════════════════ */
+    .simulators-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      animation: fadeUp .5s .1s cubic-bezier(.16,1,.3,1) both;
     }
 
-    .course-card {
-      background: var(--surface);
-      border: 1px solid var(--border-soft);
-      border-radius: 16px;
-      padding: 22px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color .25s, transform .2s;
-      animation: fadeUp .5s both;
-    }
-    .course-card:hover {
-      border-color: var(--border);
-      transform: translateY(-3px);
-    }
-
-    .course-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      border-radius: 16px 16px 0 0;
-    }
-    .course-card.c1::before { background: linear-gradient(90deg, var(--orange), #F08040); }
-    .course-card.c2::before { background: linear-gradient(90deg, var(--green), #7ADFA8); }
-    .course-card.c3::before { background: linear-gradient(90deg, var(--blue), #7AB8F5); }
-    .course-card.c4::before { background: linear-gradient(90deg, var(--yellow), #F0C860); }
-
-    .course-icon {
-      width: 42px; height: 42px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      margin-bottom: 14px;
-    }
-    .course-card.c1 .course-icon { background: rgba(200,80,26,0.15); }
-    .course-card.c2 .course-icon { background: rgba(76,175,125,0.15); }
-    .course-card.c3 .course-icon { background: rgba(74,144,217,0.15); }
-    .course-card.c4 .course-icon { background: rgba(232,160,32,0.15); }
-
-    .course-card h3 {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--cream);
-      margin-bottom: 4px;
-    }
-    .course-card .teacher {
-      font-size: 11.5px;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    .progress-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 7px;
-    }
-    .progress-row span:first-child {
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .progress-row span:last-child {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .progress-bar {
-      height: 5px;
-      background: var(--surface-3);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 99px;
-      animation: fillBar 1.2s cubic-bezier(.16,1,.3,1) both;
-    }
-    @keyframes fillBar {
-      from { width: 0 !important; }
-    }
-    .course-card.c1 .progress-fill { background: linear-gradient(90deg, var(--orange), #F08040); }
-    .course-card.c2 .progress-fill { background: linear-gradient(90deg, var(--green), #7ADFA8); }
-    .course-card.c3 .progress-fill { background: linear-gradient(90deg, var(--blue), #7AB8F5); }
-    .course-card.c4 .progress-fill { background: linear-gradient(90deg, var(--yellow), #F0C860); }
-
-    .course-footer {
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .course-tag {
-      font-size: 10.5px;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 20px;
-      letter-spacing: .3px;
-    }
-    .course-card.c1 .course-tag { background: rgba(200,80,26,0.15); color: #E07040; }
-    .course-card.c2 .course-tag { background: rgba(76,175,125,0.15); color: #5DC890; }
-    .course-card.c3 .course-tag { background: rgba(74,144,217,0.15); color: #6AAAE0; }
-    .course-card.c4 .course-tag { background: rgba(232,160,32,0.15); color: #D09828; }
-
-    .course-next {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* ════════════════════
-       BOTTOM GRID (Grades + Schedule)
-    ════════════════════ */
-    .bottom-grid {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 20px;
-    }
-
-    /* Grades table */
-    .grades-panel {
+    .sim-panel {
       background: var(--surface);
       border: 1px solid var(--border-soft);
       border-radius: 20px;
       padding: 26px 28px;
-      animation: fadeUp .5s .35s both;
+      display: flex; flex-direction: column; gap: 18px;
+      transition: border-color .25s, transform .2s;
+    }
+    .sim-panel:hover { border-color: var(--border); transform: translateY(-2px); }
+    .sim-panel.practica { border-top: 2px solid rgba(76,175,125,.5); }
+    .sim-panel.final    { border-top: 2px solid rgba(200,80,26,.5); }
+
+    .sim-panel-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between;
     }
 
-    .grades-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+    .sim-type-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; padding: 3px 10px;
+      border-radius: 20px;
     }
-    .grades-table thead th {
-      font-size: 10.5px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-align: left;
-      padding: 0 12px 12px;
-      border-bottom: 1px solid var(--border-soft);
+    .practica .sim-type-badge {
+      background: var(--green-dim); color: var(--green);
+      border: 1px solid rgba(76,175,125,.25);
     }
-    .grades-table tbody tr {
-      border-bottom: 1px solid var(--border-soft);
-      transition: background .15s;
-      cursor: pointer;
-    }
-    .grades-table tbody tr:hover { background: var(--surface-2); }
-    .grades-table tbody tr:last-child { border-bottom: none; }
-    .grades-table tbody td {
-      padding: 14px 12px;
-      font-size: 13.5px;
-      color: var(--text);
-    }
-    .grades-table .subject-cell {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .subject-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    .final .sim-type-badge {
+      background: var(--orange-dim); color: var(--orange-2);
+      border: 1px solid rgba(200,80,26,.25);
     }
 
-    .grade-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 44px;
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 700;
+    .sim-panel-header h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px; letter-spacing: 2px; color: var(--cream);
+      margin-top: 8px;
     }
-    .grade-pill.excellent { background: rgba(76,175,125,0.15); color: #4CAF7D; }
-    .grade-pill.good      { background: rgba(74,144,217,0.15); color: #4A90D9; }
-    .grade-pill.average   { background: rgba(232,160,32,0.15); color: #E8A020; }
-    .grade-pill.low       { background: rgba(230,80,60,0.15);  color: #E85040; }
 
-    .trend {
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .sim-attempts {
+      font-size: 11px; color: var(--muted);
+      text-align: right; line-height: 1.4;
     }
-    .trend.up   { color: var(--green); }
-    .trend.down { color: #E85040; }
-    .trend.flat { color: var(--muted); }
+    .sim-attempts strong { color: var(--text); display: block; font-size: 13px; }
 
-    /* Schedule panel */
-    .schedule-panel {
+    /* Big score */
+    .sim-big-score {
+      display: flex; align-items: flex-end; gap: 8px;
+    }
+    .sim-score-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 64px; letter-spacing: 2px;
+      line-height: 1; color: var(--cream);
+    }
+    .sim-score-num.empty { color: var(--muted); font-size: 48px; }
+    .sim-score-pct {
+      font-size: 22px; color: var(--muted);
+      padding-bottom: 10px; font-weight: 300;
+    }
+
+    .sim-score-meta {
+      display: flex; gap: 14px; flex-wrap: wrap;
+    }
+    .sim-meta-pill {
+      font-size: 11.5px; font-weight: 600;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .pill-green { background: var(--green-dim); color: var(--green); }
+    .pill-orange { background: var(--orange-dim); color: var(--orange-2); }
+    .pill-muted { background: var(--surface-3); color: var(--muted); }
+    .pill-red   { background: var(--red-dim); color: var(--red); }
+
+    /* Mini history */
+    .mini-hist-label {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .hist-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .hist-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-soft);
+    }
+
+    .hist-date { font-size: 11px; color: var(--muted); flex: 1; }
+
+    .hist-score-badge {
+      font-size: 12px; font-weight: 700;
+      padding: 2px 9px; border-radius: 8px;
+    }
+    .hist-score-badge.pass { background: var(--green-dim); color: var(--green); }
+    .hist-score-badge.fail { background: var(--red-dim);   color: var(--red);   }
+
+    .hist-detail { font-size: 11px; color: var(--muted); min-width: 44px; text-align: right; }
+
+    .hist-empty {
+      font-size: 12px; color: var(--muted);
+      text-align: center; padding: 16px;
+      border: 1px dashed var(--border-soft);
+      border-radius: 10px;
+    }
+
+    /* CTA button */
+    .btn-cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      border: none; border-radius: 12px; cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 17px; letter-spacing: 2px;
+      padding: 12px 24px; text-decoration: none;
+      transition: opacity .2s, transform .15s;
+      margin-top: auto;
+    }
+    .btn-cta:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-cta:active { transform: scale(.97); }
+    .btn-cta.green { background: var(--green);  color: #fff; box-shadow: 0 6px 20px rgba(76,175,125,.35); }
+    .btn-cta.orange { background: var(--orange); color: #fff; box-shadow: 0 6px 20px rgba(200,80,26,.35); }
+    .btn-cta.disabled {
+      background: var(--surface-3); color: var(--muted);
+      cursor: not-allowed; box-shadow: none; pointer-events: none;
+    }
+
+    /* ════════════════════════════
+       COMPARISON & BENEFIT SECTION
+    ════════════════════════════ */
+    .comparison-section {
       background: var(--surface);
       border: 1px solid var(--border-soft);
       border-radius: 20px;
-      padding: 26px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      animation: fadeUp .5s .4s cubic-bezier(.16,1,.3,1) both;
+      padding: 28px 32px;
+      display: flex; flex-direction: column; gap: 24px;
+      animation: fadeUp .5s .18s cubic-bezier(.16,1,.3,1) both;
     }
 
-    .schedule-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .schedule-head h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 2px;
-      color: var(--cream);
-    }
-    .schedule-head span {
-      font-size: 11.5px;
-      color: var(--muted);
+    .comp-header {
+      display: flex; align-items: center; justify-content: space-between;
     }
 
-    .schedule-item {
-      display: flex;
-      gap: 14px;
-      padding: 13px 0;
-      border-bottom: 1px solid var(--border-soft);
-      align-items: flex-start;
+    .benefit-badge {
+      font-size: 11px; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; padding: 5px 14px;
+      border-radius: 20px; display: flex; align-items: center; gap: 6px;
     }
-    .schedule-item:last-child { border-bottom: none; }
+    .benefit-badge.positive { background: var(--green-dim); color: var(--green); border: 1px solid rgba(76,175,125,.25); }
+    .benefit-badge.negative { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(232,80,64,.25); }
+    .benefit-badge.neutral  { background: var(--surface-3); color: var(--muted); border: 1px solid var(--border-soft); }
+    .benefit-badge.pending  { background: var(--orange-dim); color: var(--orange-2); border: 1px solid rgba(200,80,26,.25); }
 
-    .schedule-time {
-      font-size: 11px;
-      color: var(--muted);
-      white-space: nowrap;
-      padding-top: 2px;
-      min-width: 48px;
+    /* Bars */
+    .comp-bars { display: flex; flex-direction: column; gap: 14px; }
+
+    .comp-row {
+      display: flex; align-items: center; gap: 16px;
     }
 
-    .schedule-dot-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 5px;
+    .comp-row-label {
+      font-size: 12px; font-weight: 600; color: var(--text);
+      min-width: 130px;
     }
-    .sdot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      border: 2px solid;
-      flex-shrink: 0;
+    .comp-row-sub {
+      font-size: 10px; color: var(--muted); display: block; margin-top: 1px; font-weight: 400;
     }
-    .sline {
-      width: 2px;
+
+    .comp-bar-track {
       flex: 1;
-      min-height: 24px;
-      margin-top: 3px;
-      background: var(--border-soft);
-    }
-    .schedule-item:last-child .sline { display: none; }
-
-    .schedule-info strong {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--cream);
-      margin-bottom: 3px;
-    }
-    .schedule-info span {
-      font-size: 11.5px;
-      color: var(--muted);
+      height: 14px;
+      background: var(--surface-3);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
     }
 
-    .schedule-tag {
+    .comp-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 1s cubic-bezier(.16,1,.3,1);
+    }
+    .comp-bar-fill.prac { background: linear-gradient(90deg, #3a8f65, var(--green)); }
+    .comp-bar-fill.fin  { background: linear-gradient(90deg, #a03010, var(--orange)); }
+    .comp-bar-fill.pending {
+      width: 100% !important;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--surface-3) 0, var(--surface-3) 8px,
+        var(--surface-2) 8px, var(--surface-2) 16px
+      );
+    }
+
+    .comp-bar-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; letter-spacing: 1px; min-width: 56px;
+      text-align: right;
+    }
+    .comp-bar-val.prac   { color: var(--green); }
+    .comp-bar-val.fin    { color: var(--orange-2); }
+    .comp-bar-val.pending { color: var(--muted); font-size: 13px; padding-top: 3px; font-family: 'Sora', sans-serif; font-weight: 600; letter-spacing: 0; }
+
+    /* Delta row */
+    .delta-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      border-radius: 14px;
+      border: 1px solid;
+    }
+    .delta-row.positive { background: rgba(76,175,125,.07);  border-color: rgba(76,175,125,.2); }
+    .delta-row.negative { background: rgba(232,80,64,.07);   border-color: rgba(232,80,64,.2); }
+    .delta-row.neutral  { background: var(--surface-2);       border-color: var(--border-soft); }
+
+    .delta-icon {
+      font-size: 28px; line-height: 1;
+    }
+
+    .delta-text h4 {
+      font-size: 14px; font-weight: 700; color: var(--cream); margin-bottom: 3px;
+    }
+    .delta-text p {
+      font-size: 12px; color: var(--muted); line-height: 1.4;
+    }
+
+    .delta-num {
       margin-left: auto;
-      font-size: 10.5px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 20px;
-      white-space: nowrap;
-      align-self: flex-start;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px; letter-spacing: 1px; line-height: 1;
+    }
+    .delta-num.positive { color: var(--green); }
+    .delta-num.negative { color: var(--red); }
+    .delta-num.neutral  { color: var(--muted); }
+
+    /* No data state */
+    .comp-empty {
+      text-align: center; padding: 32px 20px;
+      border: 1px dashed var(--border-soft);
+      border-radius: 14px;
+    }
+    .comp-empty p {
+      font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 340px; margin: 0 auto;
     }
 
     /* ── Animations ── */
@@ -1027,70 +546,37 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Stagger for cards */
-    .course-card:nth-child(1) { animation-delay: .2s; }
-    .course-card:nth-child(2) { animation-delay: .27s; }
-    .course-card:nth-child(3) { animation-delay: .34s; }
-    .course-card:nth-child(4) { animation-delay: .41s; }
-
-    /* ── FIXES DE LAYOUT ── */
-    .main { min-width: 0; }
-
     /* ── RESPONSIVE ── */
-
-    /* 1280 px — schedule panel se vuelve más angosto */
-    @media (max-width: 1280px) {
-      .bottom-grid { grid-template-columns: 1fr 290px; }
-      .exam-hero   { padding: 28px 32px; }
-      .exam-left h2 { font-size: 40px; }
-    }
-
-    /* 1100 px — bottom grid apilado */
     @media (max-width: 1100px) {
-      .bottom-grid { grid-template-columns: 1fr; }
-      .schedule-panel { max-height: none; }
-
-      .welcome-banner { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .welcome-stats  { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 12px; }
-      .wstat          { flex: 1; min-width: 100px; }
-
-      .sim-card  { flex-direction: column; align-items: flex-start; }
-      .sim-right { align-items: flex-start; width: 100%; }
-      .sim-stats { flex-wrap: wrap; }
-
-      .exam-hero  { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .exam-right { align-items: flex-start; width: 100%; }
-      .exam-stats { flex-wrap: wrap; }
+      .simulators-grid { grid-template-columns: 1fr; }
+      .welcome-banner  { flex-direction: column; align-items: flex-start; gap: 18px; }
+      .welcome-chips   { flex-wrap: wrap; }
     }
 
-    /* 900 px — sidebar colapsada (contenido sin sidebar) */
     @media (max-width: 900px) {
-      body         { grid-template-columns: 1fr; }
-      .sidebar     { display: none; }
-      .topbar      { padding: 12px 20px; }
-      .content     { padding: 20px 20px 48px; }
+      .sidebar { display: none; }
+      .main    { margin-left: 0; }
+      .topbar  { padding: 12px 20px; }
+      .content { padding: 20px 20px 48px; }
     }
 
-    /* 600 px — grids de cursos de 1 columna */
     @media (max-width: 600px) {
-      .courses-grid  { grid-template-columns: 1fr; }
-      .exam-stats    { gap: 10px; }
-      .sim-stats     { gap: 8px; }
-      .welcome-left h1 { font-size: 36px; }
-      .grades-table th, .grades-table td { padding: 8px 6px; font-size: 12px; }
+      .welcome-left h1 { font-size: 34px; }
+      .comp-row { flex-wrap: wrap; gap: 8px; }
+      .comp-row-label { min-width: 100%; }
+      .delta-num { font-size: 30px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════ SIDEBAR ══════════════ -->
+<!-- ══ SIDEBAR ══ -->
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">
-      <!-- Crow SVG -->
       <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
-        <path d="M20 8 C14 4 6 6 2 2 L6 10 C10 12 14 16 12 22 C8 18 2 20 0 26 C4 22 10 24 10 30 C9 24 14 20 16 28 L20 22 L24 28 C26 20 31 24 30 30 C30 24 36 22 40 26 C38 20 32 18 28 22 C26 16 30 12 34 10 L38 2 C34 6 26 4 20 8Z" fill="white" opacity="0.9"/>
-        <path d="M18 21 Q20 36 22 21 Q21 28 20 32 Q19 28 18 21Z" fill="white" opacity="0.9"/>
+        <path d="M20 8 C14 4 6 6 2 2 L6 10 C10 12 14 16 12 22 C8 18 2 20 0 26 C4 22 10 24 10 30 C9 24 14 20 16 28 L20 22 L24 28 C26 20 31 24 30 30 C30 24 36 22 40 26 C38 20 32 18 28 22 C26 16 30 12 34 10 L38 2 C34 6 26 4 20 8Z" fill="white" opacity=".9"/>
+        <path d="M18 21 Q20 36 22 21 Q21 28 20 32 Q19 28 18 21Z" fill="white" opacity=".9"/>
       </svg>
     </div>
     <div class="logo-text">
@@ -1100,56 +586,33 @@
   </div>
 
   <div class="sidebar-user">
-    <div class="avatar">CG</div>
+    <div class="avatar">{{ nombre|first|upper }}{{ paterno|first|upper }}</div>
     <div class="user-info">
-      <span>Carlos González</span>
-      <span>Estudiante · 5to Semestre</span>
+      <span>{{ nombre }} {{ paterno }}</span>
+      <span>{{ matricula }}</span>
     </div>
   </div>
 
   <nav class="sidebar-nav">
     <span class="nav-section-label">Principal</span>
 
-    <a href="#" class="nav-item active">
+    <a href="{% url 'dashboard' %}" class="nav-item active">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </a>
-    <a href="#" class="nav-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      Mis Cursos
-      <span class="badge">4</span>
-    </a>
-    <a href="#" class="nav-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      Calificaciones
-    </a>
-    <a href="#" class="nav-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Calendario
-    </a>
 
     <span class="nav-section-label">Evaluaciones</span>
+
     <a href="{% url 'simulador_practica' %}" class="nav-item">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       Simulador Práctica
-    </a>
-    <a href="{% url 'simulador_final' %}" class="nav-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      Examen de Inglés
-    </a>
-    <a href="#" class="nav-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Historial
+      {% if practica_rest > 0 %}<span class="badge">{{ practica_rest }}</span>{% endif %}
     </a>
 
-    <span class="nav-section-label">Cuenta</span>
-    <a href="#" class="nav-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Mi Perfil
-    </a>
-    <a href="#" class="nav-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-      Configuración
+    <a href="{% url 'simulador_final' %}" class="nav-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Examen Final
+      {% if final_rest > 0 %}<span class="badge">{{ final_rest }}</span>{% endif %}
     </a>
   </nav>
 
@@ -1161,323 +624,288 @@
   </div>
 </aside>
 
-<!-- ══════════════ MAIN ══════════════ -->
+<!-- ══ MAIN ══ -->
 <main class="main">
 
-  <!-- Topbar -->
   <header class="topbar">
     <span class="topbar-title">DASHBOARD</span>
-    <div class="topbar-search">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Buscar cursos, materiales…"/>
-    </div>
     <div class="topbar-actions">
-      <button class="icon-btn">
+      <button class="icon-btn" title="Notificaciones">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        <span class="dot"></span>
-      </button>
-      <button class="icon-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
       </button>
     </div>
   </header>
 
   <div class="content">
 
-    <!-- Welcome Banner -->
+    <!-- ══ WELCOME ══ -->
     <div class="welcome-banner">
       <div class="welcome-left">
-        <h1>¡Hola, <span>Carlos!</span></h1>
-        <p>Tienes 2 tareas pendientes y un examen próximo. ¡Sigue adelante, el equipo Karasuno nunca se rinde!</p>
+        <h1>¡Hola, <span>{{ nombre }}!</span></h1>
+        <p>Matrícula: {{ matricula }} &nbsp;·&nbsp; Simulador de Inglés</p>
       </div>
-      <div class="welcome-stats">
-        <div class="wstat">
-          <div class="val">4</div>
-          <div class="lbl">Cursos Activos</div>
+      <div class="welcome-chips">
+        <div class="chip {% if practica_rest == 0 %}chip-red{% endif %}">
+          <div class="val">{{ practica_rest }}</div>
+          <div class="lbl">Intentos práctica disponibles</div>
         </div>
-        <div class="wstat">
-          <div class="val">83</div>
-          <div class="lbl">Promedio Gral.</div>
+        <div class="chip {% if final_rest == 0 %}chip-red{% endif %}">
+          <div class="val">{{ final_rest }}</div>
+          <div class="lbl">Intentos finales disponibles</div>
         </div>
-        <div class="wstat">
-          <div class="val">2</div>
-          <div class="lbl">Tareas Pend.</div>
+        {% if aprobado_final %}
+        <div class="chip chip-green">
+          <div class="val">✓</div>
+          <div class="lbl">Examen final aprobado</div>
         </div>
+        {% endif %}
       </div>
     </div>
 
-    <!-- ═══════════ SIMULADOR DE PRÁCTICA ═══════════ -->
-    <a href="{% url 'simulador_practica' %}" class="sim-card">
-      <div class="sim-left">
-        <div class="sim-badge">Disponible</div>
-        <h2>Simulador de<br/><em>Práctica</em></h2>
-        <p>Practica con 20 preguntas aleatorias antes del examen final. Tienes hasta 5 intentos y 60 segundos por pregunta.</p>
-      </div>
-      <div class="sim-right">
-        <div class="sim-stats">
-          <div class="sim-stat">
-            <div class="v">20</div>
-            <div class="l">Preguntas</div>
-          </div>
-          <div class="sim-stat">
-            <div class="v">60</div>
-            <div class="l">Seg / Preg</div>
-          </div>
-          <div class="sim-stat">
-            <div class="v">5</div>
-            <div class="l">Intentos</div>
-          </div>
-        </div>
-        <div class="btn-sim">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Iniciar práctica
-        </div>
-      </div>
-    </a>
-
-    <!-- ═══════════ ENGLISH EXAM HERO ═══════════ -->
-    <a href="{% url 'simulador_final' %}" class="exam-hero" style="text-decoration:none;">
-      <div class="exam-left">
-        <div class="exam-badge">Disponible ahora</div>
-        <h2>Examen Final de<br/><em>Inglés B2</em></h2>
-        <p>Demuestra todo lo aprendido en el simulador. El examen tiene una duración de 60 minutos y cubre gramática, comprensión lectora y expresión escrita.</p>
-      </div>
-      <div class="exam-right">
-        <div class="exam-stats">
-          <div class="exam-stat">
-            <div class="v">60</div>
-            <div class="l">Minutos</div>
-          </div>
-          <div class="exam-stat">
-            <div class="v">40</div>
-            <div class="l">Reactivos</div>
-          </div>
-          <div class="exam-stat">
-            <div class="v">B2</div>
-            <div class="l">Nivel</div>
-          </div>
-        </div>
-        <div class="btn-exam">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Ir al Examen
-        </div>
-      </div>
-    </a>
-
-    <!-- ═══════════ CURSOS INSCRITOS ═══════════ -->
+    <!-- ══ SIMULATORS ══ -->
     <div>
-      <div class="section-head">
-        <h2>Cursos Inscritos <span></span></h2>
-        <a href="#" class="see-all">Ver todos →</a>
+      <div class="section-head" style="margin-bottom:14px;">
+        <h2>Simuladores <span></span></h2>
       </div>
-      <div class="courses-grid" style="margin-top:18px;">
 
-        <div class="course-card c1">
-          <div class="course-icon">📘</div>
-          <h3>Inglés B2 — Simulación</h3>
-          <div class="teacher">Prof. Anahí Mendez</div>
-          <div class="progress-row">
-            <span>Progreso</span><span>78%</span>
+      <div class="simulators-grid">
+
+        <!-- PRÁCTICA -->
+        <div class="sim-panel practica">
+          <div class="sim-panel-header">
+            <div>
+              <div class="sim-type-badge">Simulador</div>
+              <h3>Práctica</h3>
+            </div>
+            <div class="sim-attempts">
+              <strong>{{ total_practica }} / 5</strong>
+              intentos usados
+            </div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
-          <div class="course-footer">
-            <span class="course-tag">En curso</span>
-            <span class="course-next">Clase: Lun 10:00</span>
+
+          <div class="sim-big-score">
+            {% if avg_practica %}
+              <span class="sim-score-num">{{ avg_practica }}</span>
+              <span class="sim-score-pct">%</span>
+            {% else %}
+              <span class="sim-score-num empty">—</span>
+            {% endif %}
           </div>
+
+          <div class="sim-score-meta">
+            {% if avg_practica %}
+              <span class="sim-meta-pill pill-green">Promedio general</span>
+              {% if mejor_practica %}
+                <span class="sim-meta-pill pill-muted">Mejor: {{ mejor_practica }}%</span>
+              {% endif %}
+            {% else %}
+              <span class="sim-meta-pill pill-muted">Sin intentos finalizados</span>
+            {% endif %}
+          </div>
+
+          <!-- Historial -->
+          <div>
+            <p class="mini-hist-label">Últimos intentos</p>
+            <div class="hist-list">
+              {% for ex in historial_practica %}
+              <div class="hist-row">
+                <span class="hist-date">{{ ex.fecha_inicio|date:"d/m/Y" }}</span>
+                <span class="hist-score-badge {% if ex.aprobado %}pass{% else %}fail{% endif %}">
+                  {{ ex.porcentaje|floatformat:1 }}%
+                </span>
+                <span class="hist-detail">{{ ex.aciertos }}/{{ ex.total_preguntas }}</span>
+              </div>
+              {% empty %}
+              <div class="hist-empty">
+                <p>Aún no has realizado ningún simulacro</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if practica_rest > 0 %}
+            <a href="{% url 'simulador_practica' %}" class="btn-cta green">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Iniciar Práctica
+            </a>
+          {% else %}
+            <span class="btn-cta disabled">Sin intentos disponibles</span>
+          {% endif %}
         </div>
 
-        <div class="course-card c2">
-          <div class="course-icon">📐</div>
-          <h3>Matemáticas Avanzadas</h3>
-          <div class="teacher">Prof. Rodrigo Salas</div>
-          <div class="progress-row">
-            <span>Progreso</span><span>92%</span>
+        <!-- FINAL -->
+        <div class="sim-panel final">
+          <div class="sim-panel-header">
+            <div>
+              <div class="sim-type-badge">Examen</div>
+              <h3>Examen Final</h3>
+            </div>
+            <div class="sim-attempts">
+              <strong>{{ total_final }} / 2</strong>
+              intentos usados
+            </div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
-          <div class="course-footer">
-            <span class="course-tag">Casi listo</span>
-            <span class="course-next">Clase: Mar 9:00</span>
-          </div>
-        </div>
 
-        <div class="course-card c3">
-          <div class="course-icon">⚗️</div>
-          <h3>Física Aplicada</h3>
-          <div class="teacher">Prof. Diana Torres</div>
-          <div class="progress-row">
-            <span>Progreso</span><span>65%</span>
+          <div class="sim-big-score">
+            {% if avg_final %}
+              <span class="sim-score-num">{{ avg_final }}</span>
+              <span class="sim-score-pct">%</span>
+            {% else %}
+              <span class="sim-score-num empty">—</span>
+            {% endif %}
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
-          <div class="course-footer">
-            <span class="course-tag">En curso</span>
-            <span class="course-next">Clase: Mié 11:00</span>
-          </div>
-        </div>
 
-        <div class="course-card c4">
-          <div class="course-icon">🌐</div>
-          <h3>Historia Universal</h3>
-          <div class="teacher">Prof. Marco Estrada</div>
-          <div class="progress-row">
-            <span>Progreso</span><span>88%</span>
+          <div class="sim-score-meta">
+            {% if avg_final %}
+              {% if aprobado_final %}
+                <span class="sim-meta-pill pill-green">Aprobado</span>
+              {% else %}
+                <span class="sim-meta-pill pill-red">No aprobado</span>
+              {% endif %}
+              {% if mejor_final %}
+                <span class="sim-meta-pill pill-muted">Mejor: {{ mejor_final }}%</span>
+              {% endif %}
+              {% if nivel_final and nivel_final != "No Aprobado" and nivel_final != "Reprobado" %}
+                <span class="sim-meta-pill pill-orange">{{ nivel_final }}</span>
+              {% endif %}
+            {% else %}
+              <span class="sim-meta-pill pill-muted">Sin intentos finalizados</span>
+            {% endif %}
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
-          <div class="course-footer">
-            <span class="course-tag">Por finalizar</span>
-            <span class="course-next">Clase: Jue 8:00</span>
+
+          <!-- Historial -->
+          <div>
+            <p class="mini-hist-label">Intentos realizados</p>
+            <div class="hist-list">
+              {% for ex in historial_final %}
+              <div class="hist-row">
+                <span class="hist-date">{{ ex.fecha_inicio|date:"d/m/Y" }}</span>
+                <span class="hist-score-badge {% if ex.aprobado %}pass{% else %}fail{% endif %}">
+                  {{ ex.porcentaje|floatformat:1 }}%
+                </span>
+                <span class="hist-detail">{{ ex.aciertos }}/{{ ex.total_preguntas }}</span>
+              </div>
+              {% empty %}
+              <div class="hist-empty">
+                <p>Aún no has presentado el examen final</p>
+              </div>
+              {% endfor %}
+            </div>
           </div>
+
+          {% if final_rest > 0 %}
+            <a href="{% url 'simulador_final' %}" class="btn-cta orange">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Ir al Examen Final
+            </a>
+          {% else %}
+            <span class="btn-cta disabled">Sin intentos disponibles</span>
+          {% endif %}
         </div>
 
       </div>
     </div>
 
-    <!-- ═══════════ BOTTOM GRID ═══════════ -->
-    <div class="bottom-grid">
-
-      <!-- Calificaciones -->
-      <div class="grades-panel">
-        <div class="section-head">
-          <h2>Calificaciones <span></span></h2>
-          <a href="#" class="see-all">Ver boleta →</a>
+    <!-- ══ COMPARISON & BENEFIT ══ -->
+    <div class="comparison-section">
+      <div class="comp-header">
+        <div class="section-head" style="margin:0;">
+          <h2>Beneficio del Estudio Previo <span></span></h2>
         </div>
-        <table class="grades-table">
-          <thead>
-            <tr>
-              <th>Materia</th>
-              <th>Parcial 1</th>
-              <th>Parcial 2</th>
-              <th>Final</th>
-              <th>Tendencia</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="subject-cell">
-                  <span class="subject-dot" style="background:var(--orange)"></span>
-                  Inglés B2
-                </div>
-              </td>
-              <td><span class="grade-pill good">82</span></td>
-              <td><span class="grade-pill good">85</span></td>
-              <td><span class="grade-pill excellent">—</span></td>
-              <td><span class="trend up">↑ +3</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="subject-cell">
-                  <span class="subject-dot" style="background:var(--green)"></span>
-                  Matemáticas
-                </div>
-              </td>
-              <td><span class="grade-pill excellent">96</span></td>
-              <td><span class="grade-pill excellent">94</span></td>
-              <td><span class="grade-pill excellent">95</span></td>
-              <td><span class="trend flat">→ 0</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="subject-cell">
-                  <span class="subject-dot" style="background:var(--blue)"></span>
-                  Física Aplicada
-                </div>
-              </td>
-              <td><span class="grade-pill average">72</span></td>
-              <td><span class="grade-pill average">68</span></td>
-              <td><span class="grade-pill average">—</span></td>
-              <td><span class="trend down">↓ -4</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="subject-cell">
-                  <span class="subject-dot" style="background:var(--yellow)"></span>
-                  Historia Universal
-                </div>
-              </td>
-              <td><span class="grade-pill good">88</span></td>
-              <td><span class="grade-pill excellent">91</span></td>
-              <td><span class="grade-pill excellent">90</span></td>
-              <td><span class="trend up">↑ +3</span></td>
-            </tr>
-          </tbody>
-        </table>
+
+        {% if has_comparison %}
+          {% if beneficio > 0 %}
+            <span class="benefit-badge positive">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+              La práctica mejoró tu resultado
+            </span>
+          {% elif beneficio < 0 %}
+            <span class="benefit-badge negative">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              El examen fue más difícil
+            </span>
+          {% else %}
+            <span class="benefit-badge neutral">→ Nivel consistente</span>
+          {% endif %}
+        {% elif has_practica_data %}
+          <span class="benefit-badge pending">Pendiente examen final</span>
+        {% endif %}
       </div>
 
-      <!-- Horario / Próximas actividades -->
-      <div class="schedule-panel">
-        <div class="schedule-head">
-          <h2>Hoy <span style="font-size:13px;font-family:'Sora',sans-serif;font-weight:400;">— Lunes</span></h2>
-          <span>29 Mar 2026</span>
+      <!-- Bars -->
+      {% if has_practica_data %}
+      <div class="comp-bars">
+        <div class="comp-row">
+          <div class="comp-row-label">
+            Práctica
+            <span class="comp-row-sub">Promedio de {{ total_practica }} intento{% if total_practica != 1 %}s{% endif %}</span>
+          </div>
+          <div class="comp-bar-track">
+            <div class="comp-bar-fill prac" style="width:{{ avg_practica }}%"></div>
+          </div>
+          <div class="comp-bar-val prac">{{ avg_practica }}%</div>
         </div>
 
-        <div class="schedule-item">
-          <span class="schedule-time">08:00</span>
-          <div class="schedule-dot-col">
-            <span class="sdot" style="border-color:var(--yellow); background:rgba(232,160,32,0.2)"></span>
-            <span class="sline"></span>
+        <div class="comp-row">
+          <div class="comp-row-label">
+            Examen Final
+            <span class="comp-row-sub">
+              {% if avg_final %}Promedio de {{ total_final }} intento{% if total_final != 1 %}s{% endif %}{% else %}Sin intentos aún{% endif %}
+            </span>
           </div>
-          <div class="schedule-info">
-            <strong>Historia Universal</strong>
-            <span>Aula 3B · Prof. Estrada</span>
+          <div class="comp-bar-track">
+            {% if avg_final %}
+              <div class="comp-bar-fill fin" style="width:{{ avg_final }}%"></div>
+            {% else %}
+              <div class="comp-bar-fill pending"></div>
+            {% endif %}
           </div>
-          <span class="schedule-tag" style="background:rgba(232,160,32,0.12);color:#D09828;">Clase</span>
-        </div>
-
-        <div class="schedule-item">
-          <span class="schedule-time">10:00</span>
-          <div class="schedule-dot-col">
-            <span class="sdot" style="border-color:var(--orange); background:rgba(200,80,26,0.2)"></span>
-            <span class="sline"></span>
-          </div>
-          <div class="schedule-info">
-            <strong>Inglés B2</strong>
-            <span>Lab. Idiomas · Prof. Mendez</span>
-          </div>
-          <span class="schedule-tag" style="background:rgba(200,80,26,0.12);color:#E07040;">Clase</span>
-        </div>
-
-        <div class="schedule-item">
-          <span class="schedule-time">13:00</span>
-          <div class="schedule-dot-col">
-            <span class="sdot" style="border-color:#FF6B6B; background:rgba(255,107,107,0.15)"></span>
-            <span class="sline"></span>
-          </div>
-          <div class="schedule-info">
-            <strong>Entrega: Ensayo Física</strong>
-            <span>Plataforma virtual</span>
-          </div>
-          <span class="schedule-tag" style="background:rgba(255,80,80,0.12);color:#FF7070;">Urgente</span>
-        </div>
-
-        <div class="schedule-item">
-          <span class="schedule-time">16:00</span>
-          <div class="schedule-dot-col">
-            <span class="sdot" style="border-color:var(--blue); background:rgba(74,144,217,0.2)"></span>
-            <span class="sline"></span>
-          </div>
-          <div class="schedule-info">
-            <strong>Tutoría de Matemáticas</strong>
-            <span>Sala virtual · opcional</span>
-          </div>
-          <span class="schedule-tag" style="background:rgba(74,144,217,0.12);color:#6AAAE0;">Opcional</span>
-        </div>
-
-        <div class="schedule-item">
-          <span class="schedule-time">18:00</span>
-          <div class="schedule-dot-col">
-            <span class="sdot" style="border-color:var(--orange); background:rgba(200,80,26,0.3)"></span>
-            <span class="sline"></span>
-          </div>
-          <div class="schedule-info">
-            <strong>Examen Final Inglés B2</strong>
-            <span>Lab. Idiomas · 60 min</span>
-          </div>
-          <span class="schedule-tag" style="background:rgba(200,80,26,0.2);color:var(--orange-2);">Examen</span>
+          {% if avg_final %}
+            <div class="comp-bar-val fin">{{ avg_final }}%</div>
+          {% else %}
+            <div class="comp-bar-val pending">Pendiente</div>
+          {% endif %}
         </div>
       </div>
+
+      <!-- Delta card -->
+      {% if has_comparison %}
+      <div class="delta-row {% if beneficio > 0 %}positive{% elif beneficio < 0 %}negative{% else %}neutral{% endif %}">
+        <div class="delta-icon">
+          {% if beneficio > 0 %}📈{% elif beneficio < 0 %}📉{% else %}📊{% endif %}
+        </div>
+        <div class="delta-text">
+          {% if beneficio > 0 %}
+            <h4>El simulador mejoró tu desempeño</h4>
+            <p>Tu promedio en el examen final superó al de la práctica. El estudio previo tuvo un impacto positivo.</p>
+          {% elif beneficio < 0 %}
+            <h4>El examen resultó más exigente</h4>
+            <p>Tu resultado en el examen final fue menor al promedio de práctica. Aprovecha los intentos restantes.</p>
+          {% else %}
+            <h4>Nivel consistente</h4>
+            <p>Tu desempeño en práctica y en el examen final fue igual. Tienes un dominio estable del tema.</p>
+          {% endif %}
+        </div>
+        <div class="delta-num {% if beneficio > 0 %}positive{% elif beneficio < 0 %}negative{% else %}neutral{% endif %}">
+          {% if beneficio > 0 %}+{{ beneficio }}%{% elif beneficio < 0 %}{{ beneficio }}%{% else %}0%{% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="comp-empty">
+        <p>Presenta el examen final para comparar tu desempeño con los simulacros y ver si el estudio previo tuvo impacto.</p>
+      </div>
+      {% endif %}
+
+      {% else %}
+      <!-- No data at all -->
+      <div class="comp-empty">
+        <p>Aún no has realizado ninguna simulación. Comienza con el simulador de práctica para ver tu progreso y compararlo contra el examen final.</p>
+      </div>
+      {% endif %}
 
     </div>
-  </div>
+
+  </div><!-- /content -->
 </main>
 
 </body>

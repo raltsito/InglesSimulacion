@@ -21,7 +21,8 @@
       "Bash(findstr \":8\")",
       "Bash(awk '{print $2}')",
       "Bash(python manage.py runserver 8009)",
-      "Bash(grep -v \"NULL\\)$\" \"C:/Users/carlo/Documents/Quinto Semestre/Facultad/InglesSimulacion/backend_scripts_bd/04_cargar_preguntas.sql\")"
+      "Bash(grep -v \"NULL\\)$\" \"C:/Users/carlo/Documents/Quinto Semestre/Facultad/InglesSimulacion/backend_scripts_bd/04_cargar_preguntas.sql\")",
+      "Bash(python -c ':*)"
     ]
   }
 }
