@@ -24,7 +24,9 @@
       "Bash(grep -v \"NULL\\)$\" \"C:/Users/carlo/Documents/Quinto Semestre/Facultad/InglesSimulacion/backend_scripts_bd/04_cargar_preguntas.sql\")",
       "Bash(python -c ':*)",
       "Bash(python manage.py shell -c ' *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "Bash(where libreoffice *)",
+      "Read(//c/Program Files/**)"
     ]
   }
 }
