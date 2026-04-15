@@ -279,6 +279,7 @@
       color: var(--dark);
       line-height: 1.45;
       margin-bottom: 28px;
+      white-space: pre-wrap;
     }
 
     /* Question image */
@@ -676,7 +677,7 @@
 
   // Limpia saltos de línea literales o reales del texto de BD
   function clean(str) {
-    return (str || '').replace(/[\r\n]+/g, ' ').trim();
+    return (str || '').trim();
   }
 
   let currentIdx      = 0;

@@ -14,4 +14,7 @@ urlpatterns = [
     path('simulador/responder/', views.responder_pregunta_view, name='responder_pregunta'),
     path('simulador/expirar/',   views.expirar_pregunta_view,   name='expirar_pregunta'),
     path('simulador/calificar/', views.calificar_examen_view,   name='calificar_examen'),
+
+    # Revisión interna de imágenes
+    path('IMAGENESSECRET/', views.imagenes_secret_view, name='imagenes_secret'),
 ]

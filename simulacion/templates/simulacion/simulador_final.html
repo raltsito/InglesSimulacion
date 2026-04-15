@@ -261,6 +261,7 @@
       font-size: clamp(16px, 2.1vw, 21px);
       font-weight: 800; color: var(--dark);
       line-height: 1.5; margin-bottom: 24px;
+      white-space: pre-wrap;
     }
 
     /* Question image */
@@ -629,7 +630,7 @@
   let autoAdvTimer  = null;
 
   function clean(str) {
-    return (str || '').replace(/[\r\n]+/g, ' ').trim();
+    return (str || '').trim();
   }
 
   // ── Init ──────────────────────────────────────────────────────────────────

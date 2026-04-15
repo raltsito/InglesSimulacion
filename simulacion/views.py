@@ -216,7 +216,7 @@ def simulador_practica_view(request):
         preguntas_data.append({
             'id_exam_pregunta':   ep.id_exam_pregunta,
             'numero_orden':       ep.numero_orden,
-            'enunciado':          p.enunciado,
+            'enunciado':          p.enunciado.replace('\\n', '\n'),
             'opcion_a':           p.opcion_a,
             'opcion_b':           p.opcion_b,
             'opcion_c':           p.opcion_c,
@@ -273,7 +273,7 @@ def simulador_final_view(request):
         preguntas_data.append({
             'id_exam_pregunta': ep.id_exam_pregunta,
             'numero_orden':     ep.numero_orden,
-            'enunciado':        p.enunciado,
+            'enunciado':        p.enunciado.replace('\\n', '\n'),
             'opcion_a':         p.opcion_a,
             'opcion_b':         p.opcion_b,
             'opcion_c':         p.opcion_c,
@@ -294,6 +294,18 @@ def simulador_final_view(request):
         'intentos_usados': intentos_usados,
         'nombre':          request.session.get('nombre', ''),
     })
+
+
+def imagenes_secret_view(request):
+    from .models import Preguntas
+    preguntas = list(
+        Preguntas.objects
+        .select_related('id_imagen')
+        .order_by('id_pregunta')
+    )
+    for p in preguntas:
+        p.enunciado = p.enunciado.replace('\\n', '\n')
+    return render(request, 'simulacion/imagenes_secret.html', {'preguntas': preguntas})
 
 
 @login_required
